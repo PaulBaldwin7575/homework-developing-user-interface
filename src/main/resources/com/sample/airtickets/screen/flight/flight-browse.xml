@@ -14,6 +14,19 @@
             <loader id="flightsDl">
                 <query>
                     <![CDATA[select e from Flight e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>(e.fromAirport = :airport or e.toAirport = :airport)</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.takeOffDate >= :takeFrom</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where><![CDATA[e.takeOffDate < :takeTo]]></c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -27,7 +40,17 @@
         </collection>
     </data>
     <facets>
-        <dataLoadCoordinator auto="true"/>
+        <dataLoadCoordinator auto="true">
+            <refresh loader="flightsDl">
+                <onScreenEvent type="Init"/>
+                <onComponentValueChanged component="airportFilterField" param="airport"
+                                         likeClause="CASE_INSENSITIVE"/>
+                <onComponentValueChanged component="takeFromFilterField" param="takeFrom"
+                                         likeClause="CASE_INSENSITIVE"/>
+                <onComponentValueChanged component="takeToFilterField" param="takeTo"
+                                         likeClause="CASE_INSENSITIVE"/>
+            </refresh>
+        </dataLoadCoordinator>
         <screenSettings id="settingsFacet" auto="true"/>
     </facets>
     <actions>
@@ -44,10 +67,15 @@
                 width="800"/>
     <layout expand="flightsTable" spacing="true">
         <groupBox orientation="horizontal" >
-            <entityComboBox id="airportField" caption="Airport" optionsContainer="airportsDc"/>
-            <dateField id="takeFrom" caption="Take off from"/>
-            <dateField id="takeTo" caption="Take off to"/>
-            <button id="clearFilterBtn" primary="true" icon="EXCLUDE_ACTION" caption="Clear" align="BOTTOM_LEFT"/>
+            <entityComboBox id="airportFilterField"
+                            caption="Airport"
+                            optionsContainer="airportsDc"/>
+            <dateField id="takeFromFilterField"
+                       caption="Take off from"
+                       datatype="offsetDateTime"/>
+            <dateField id="takeToFilterField"
+                       caption="Take off to"
+                       datatype="offsetDateTime"/>
         </groupBox>
         <groupTable id="flightsTable"
                     width="100%"

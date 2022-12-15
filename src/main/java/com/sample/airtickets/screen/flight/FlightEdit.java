@@ -5,6 +5,7 @@ import io.jmix.core.DataManager;
 import io.jmix.core.QueryUtils;
 import io.jmix.core.querycondition.Condition;
 import io.jmix.core.querycondition.PropertyCondition;
+import io.jmix.ui.component.EntitySuggestionField;
 import io.jmix.ui.screen.*;
 import com.sample.airtickets.entity.Flight;
 import org.springframework.beans.factory.annotation.Autowired;

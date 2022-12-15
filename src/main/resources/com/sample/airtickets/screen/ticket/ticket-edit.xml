@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://window.caption"
+        focusComponent="form">
+    <data>
+        <instance id="ticketDc"
+                  class="com.sample.airtickets.entity.Ticket">
+            <fetchPlan extends="_base">
+                <property name="flight" fetchPlan="_base">
+                    <property name="fromAirport" fetchPlan="_base"/>
+                    <property name="toAirport" fetchPlan="_base"/>
+                    <property name="airline" fetchPlan="_base"/>
+                </property>
+            </fetchPlan>
+            <loader>
+            </loader>
+        </instance>
+    </data>
+    <facets>
+
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+
+    <layout spacing="true">
+        <form id="form" dataContainer="ticketDc">
+            <column width="350px">
+                <textField id="reservationIdField"
+                           property="reservationId"
+                           editable="false"
+                           dataContainer="ticketDc"/>
+                <textField id="passportNumberField"
+                           property="passportNumber"
+                           editable="false"
+                           dataContainer="ticketDc"/>
+                <textField id="passengerNameField"
+                           property="passengerName"
+                           editable="false"
+                           dataContainer="ticketDc"/>
+                <textField id="telephoneField"
+                           property="telephone"
+                           editable="false"
+                           dataContainer="ticketDc"/>
+            </column>
+            <column>
+                <textField id="flightNumberField"
+                           property="flight.number"
+                           dataContainer="ticketDc"
+                           editable="false"/>
+                <textField id="airlineField"
+                           property="flight.airline"
+                           dataContainer="ticketDc"
+                           editable="false"/>
+                <textField id="fromAirportField"
+                           property="flight.fromAirport"
+                           dataContainer="ticketDc"
+                           editable="false"/>
+                <textField id="toAirportField"
+                           property="flight.toAirport"
+                           dataContainer="ticketDc"
+                           editable="false"/>
+                <dateField id="takeOffDateField"
+                           caption="Take off date"
+                           editable="false"
+                           dataContainer="ticketDc"
+                           property="flight.takeOffDate"/>
+            </column>
+        </form>
+    </layout>
+</window>

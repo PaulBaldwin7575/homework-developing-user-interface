@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://ticketReservation.caption">
+    <data>
+        <collection id="airportsDc" class="com.sample.airtickets.entity.Airport">
+            <fetchPlan extends="_base"/>
+            <loader id="airportsDl">
+                <query>
+                    <![CDATA[select e from Airport e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="flightsDc" class="com.sample.airtickets.entity.Flight">
+            <fetchPlan extends="_base">
+                <property name="fromAirport" fetchPlan="_base"/>
+                <property name="toAirport" fetchPlan="_base"/>
+                <property name="airline" fetchPlan="_base"/>
+            </fetchPlan>
+        </collection>
+        <instance id="flightDc" class="com.sample.airtickets.entity.Flight">
+            <fetchPlan extends="_base"/>
+            <loader id="flightDl"/>
+        </instance>
+    </data>
+    <facets>
+        <screenSettings auto="true"/>
+        <dataLoadCoordinator auto="true"/>
+        <inputDialog id="inputDialog"
+                     caption="Reserve ticket"
+                     dialogActions="OK_CANCEL">
+            <parameters>
+                <stringParameter id="passengerNameField"
+                                 caption="Passenger name"
+                                 required="true"/>
+                <stringParameter id="passportNumberField"
+                                 caption="Passport number"
+                                 required="true"/>
+                <stringParameter id="telephoneField"
+                                 caption="Telephone"
+                                 required="true"/>
+            </parameters>
+        </inputDialog>
+    </facets>
+    <layout expand="flightsTable">
+        <groupBox orientation="horizontal" spacing="true" caption="Filter">
+            <entityComboBox id="airportFromFilterField"
+                    optionsContainer="airportsDc"/>
+            <entityComboBox id="airportToFilterField"
+                    optionsContainer="airportsDc"/>
+            <dateField id="dateFilterField"
+                       datatype="localDate"
+                       dateFormat="dd/MM/yyyy"/>
+            <button id="searchFilterBtn" 
+                    icon="SEARCH" 
+                    caption="Search"/>
+        </groupBox>
+        <progressBar id="searchProgressBar"
+                     indeterminate="true"
+                     width="100%" visible="false"/>
+        <table id="flightsTable" width="100%" dataContainer="flightsDc">
+            <columns>
+                <column id="number"/>
+                <column id="fromAirport"/>
+                <column id="toAirport"/>
+                <column id="airline"/>
+                <column id="takeOffDate"/>
+                <column id="actions"
+                caption="Actions"/>
+            </columns>
+        </table>
+    </layout>
+</window>

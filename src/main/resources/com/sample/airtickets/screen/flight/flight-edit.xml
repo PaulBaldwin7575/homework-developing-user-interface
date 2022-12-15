@@ -40,7 +40,7 @@
                 <textField id="numberField" property="number"/>
                 <entitySuggestionField id="airlineField"
                                        dataContainer="flightDc"
-                                       property="airline"/>
+                                       property="airline" minSearchStringLength="2"/>
                 <dateField id="takeOffDateField" property="takeOffDate"/>
             </column>
             <column>
